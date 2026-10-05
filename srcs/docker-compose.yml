@@ -6,6 +6,13 @@ volumes:
       device: /home/me/data/mariadb
       o: bind
       type: none
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      device: /home/me/data/wordpress
+      o: bind
+      type: none
 
 services:
   mariadb:
@@ -16,17 +23,30 @@ services:
     env_file: 
       - .env
     expose: 
-      - "3306"
+      - $MDB_PORT
     networks:
       - inception
   nginx:
+    container_name: nginx
     build: ./requirements/nginx
     networks:
       - inception
     ports:
-      - "443:443"
+      - ${NGINX_PORT}:${NGINX_PORT}
       - "80:80"
-
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    depends_on: 
+      - mariadb
+    networks: 
+      - inception
+    volumes: 
+      - wordpress:/var/www/html 
+    env_file: 
+      - .env
+    expose:
+      - $WP_PORT
 
 networks:
   inception:

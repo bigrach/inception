@@ -11,7 +11,7 @@ RUN mkdir -p /etc/nginx/certs && \
     -newkey rsa:2048 \
     -keyout /etc/nginx/certs/server.key \
     -out /etc/nginx/certs/server.crt \
-    -subj "/CN=localhost"
+    -subj	"/CN=localhost/C=FR/ST=NA/L=Angouleme/O=42/OU=42/CN=$DOMAIN/UID=$USER"
 
 EXPOSE 443
 

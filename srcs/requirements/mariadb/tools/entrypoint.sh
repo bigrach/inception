@@ -8,6 +8,11 @@ mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 echo "adding /run/mysqld permissions.."
 
+# Editing .cnf with the right port from env
+envsubst '${MDB_PORT}' \
+    < /etc/mysql/mariadb.conf.d/50-server.cnf.template \
+    > /etc/mysql/mariadb.conf.d/50-server.cnf
+
 # SQL time my dove
 if [ ! -d "/var/lib/mysql/$MDB_DATABASE" ]; then
 	echo "mariadb database initialization"

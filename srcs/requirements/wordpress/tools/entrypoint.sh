@@ -2,8 +2,10 @@
 
 cd /var/www/html
 
+sed -i "s|^listen = .*|listen = 0.0.0.0:${WP_PORT}|" /etc/php/8.2/fpm/pool.d/www.conf 
+
 # Wait for MariaDB
-until (echo > /dev/tcp/mariadb/3306) 2>/dev/null; do
+until (echo > /dev/tcp/mariadb/${MDB_PORT}) 2>/dev/null; do
     echo "Wordpress is waiting for mariadb..."
     sleep 1
 done
@@ -25,6 +27,7 @@ if [ ! -f wp-config.php ]; then
                         --admin_user=${WP_ADMIN_USER} \
                         --admin_password=${WP_ADMIN_PASSWORD} \
                         --admin_email=${WP_ADMIN_MAIL} \
+                        --skip-email \
                         --allow-root
 
     wp user create $WP_USER $WP_USER_MAIL \

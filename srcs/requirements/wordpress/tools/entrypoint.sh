@@ -8,8 +8,7 @@ until (echo > /dev/tcp/mariadb/3306) 2>/dev/null; do
     sleep 1
 done
 
-# Time to make this happen
-
+# CLI time baby
 if [ ! -f wp-config.php ]; then
     echo "Wordpress init"
 
@@ -21,11 +20,11 @@ if [ ! -f wp-config.php ]; then
                         --dbhost=mariadb \
                         --allow-root
 
-    wp core install     --url=$DOMAIN \
+    wp core install     --url=${DOMAIN} \
                         --title="Inception" \
-                        --admin_user=$WP_ADM_USER \
-                        --admin_password=$WP_ADM_PASSWORD \
-                        --admin_email=$WP_ADM_MAIL \
+                        --admin_user=${WP_ADMIN_USER} \
+                        --admin_password=${WP_ADMIN_PASSWORD} \
+                        --admin_email=${WP_ADMIN_MAIL} \
                         --allow-root
 
     wp user create $WP_USER $WP_USER_MAIL \

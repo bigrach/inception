@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Making sure permissions and directories are OK 
 chown -R mysql:mysql /var/lib/mysql
 echo "Adding var/lib/mysql permissions.."
 
@@ -7,16 +8,12 @@ mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 echo "adding /run/mysqld permissions.."
 
-echo "Checking..."
-ls -la /var/lib/mysql
-
+# SQL time my dove
 if [ ! -d "/var/lib/mysql/$MDB_DATABASE" ]; then
 	echo "mariadb database initialization"
 
 	mariadbd --user=mysql --skip-networking &
-#	mysql_install_db --basedir=/usr \
-#					--datadir=/var/lib/mysql \
-#					--user=mysql
+	
 	MYPID=$!
 
 	until mariadb-admin ping --silent; do
@@ -33,6 +30,8 @@ EOF
 	
     mariadb-admin -uroot -p"${MDB_ROOT_PASSWORD}" shutdown
     wait $MYPID
+else 
+	echo "working on previously built mariadb database"
 fi
 
 echo "Starting Mariadb"

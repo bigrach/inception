@@ -15,6 +15,10 @@ RUN chmod +x wp-cli.phar
 
 RUN mv wp-cli.phar /usr/local/bin/wp
 
+RUN sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.conf 
+
+RUN mkdir -p /run/php
+
 RUN wp cli update
 
 ENTRYPOINT ["./entrypoint.sh"]

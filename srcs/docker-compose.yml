@@ -3,16 +3,17 @@ volumes:
     name: mariadb
     driver: local
     driver_opts: 
-      device: /home/me/data/mariadb
+      device: $MDB_VOLUME
       o: bind
       type: none
   wordpress:
     name: wordpress
     driver: local
     driver_opts:
-      device: /home/me/data/wordpress
+      device: $WP_VOLUME
       o: bind
       type: none
+
 
 services:
   mariadb:
@@ -28,6 +29,13 @@ services:
       - $MDB_PORT
     networks:
       - inception
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -u root -p$${MDB_ADMIN_PASSWORD}"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+
   nginx:
     container_name: nginx
     build: ./requirements/nginx
@@ -46,6 +54,8 @@ services:
 #      - nginx_secrets
     expose:
       - $NGINX_PORT
+    restart: on-failure
+
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
@@ -61,6 +71,8 @@ services:
 #      - wp_secrets
     expose:
       - $WP_PORT
+    restart: on-failure
+
 
 networks:
   inception:
@@ -70,6 +82,6 @@ networks:
 #  bd_secrets:
 #    - .env
 #  wp_secrets:
-#    - .env  
+#    file: .env  
 #  nginx_secrets:
 #    - .env

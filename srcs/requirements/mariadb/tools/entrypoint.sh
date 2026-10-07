@@ -36,7 +36,7 @@ EOF
     mariadb-admin -uroot -p"${MDB_ROOT_PASSWORD}" shutdown
     wait $MYPID
 else 
-	echo "working on previously built mariadb database"
+	echo "Working on previously built mariadb database"
 fi
 
 echo "Starting Mariadb"

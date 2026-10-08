@@ -31,7 +31,7 @@ down:
 
 # enter specific container
 mariadb: 
-	docker exec -it mariadb mariadb --user=${MDB_USER} --password=${MDB_USER_PASSWORD}
+	docker exec -it mariadb mariadb --user=${MDB_USER} -p
 
 wordpress:
 	docker exec -it wordpress bash

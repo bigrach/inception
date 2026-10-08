@@ -27,16 +27,11 @@ USER = *your name for the certificate*
 # MDB 
 MDB_DATABASE = *the name of the mariadb database*
 MDB_USER = *the login of the mariadb user*
-MDB_USER_PASSWORD = *the password of the mariadb user*
-MDB_ROOT_PASSWORD = *the password of the mariadb root*
 
 # WP
 WP_USER = *the login of the wordpress user*
-WP_USER_PASSWORD = *the password of the wordpress user*
 WP_USER_MAIL = *the email of the wordpress user*
-
 WP_ADMIN_USER = *the login of the wordpress admin
-WP_ADMIN_PASSWORD = *the password of the wordpress admin*
 WP_ADMIN_MAIL = *the email of the wordpress admin (do not input the same as the user's)*
 
 # PORTS
@@ -48,6 +43,24 @@ NGINX_PORT = *which ports for nginx*
 MDB_VOLUME = *where the mariadb database will be stored on your machine*
 WP_VOLUME = *where the wordpress website files data will be stored on your machine*
 ```
+
+## Secrets
+Credentials (all of the passwords) are to be stored in the `secrets` folder in `srcs`, each in their own 
+```
+  WP_USER_PASSWORD:
+    file: ./secrets/wp_user_pwd.txt
+  WP_ADMIN_PASSWORD:
+    file: ./secrets/wp_admn_pwd.txt
+  MDB_USER_PASSWORD:
+    file: ./secrets/mdb_user_pwd.txt
+  MDB_ROOT_PASSWORD:
+    file: ./secrets/mdb_root_pwd.txt
+```
+In the file, there should be only the password present. 
+```
+my_super_wp_user_pwd
+```
+For example, this could be the content of `wp_user_pwd.txt`. 
 ## Starting the docker compose, interrupting it...
 ```bash
 ~/inception$ make

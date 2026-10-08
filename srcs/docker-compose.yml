@@ -23,15 +23,16 @@ services:
       - mariadb:/var/lib/mysql 
     env_file: 
       - .env
-#    secrets:
-#      - bd_secrets
+    secrets:
+      - MDB_USER_PASSWORD
+      - MDB_ROOT_PASSWORD
     expose: 
       - $MDB_PORT
     networks:
       - inception
     restart: on-failure
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -u root -p$${MDB_ADMIN_PASSWORD}"]
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -P $${MDB_PORT} --silent"]
       interval: 5s
       timeout: 2s
       retries: 5
@@ -50,8 +51,6 @@ services:
       - wordpress
     env_file: 
       - .env
-#    secrets:
-#      - nginx_secrets
     expose:
       - $NGINX_PORT
     restart: on-failure
@@ -67,8 +66,10 @@ services:
       - wordpress:/var/www/html 
     env_file: 
       - .env
-#    secrets:
-#      - wp_secrets
+    secrets:
+      - WP_USER_PASSWORD
+      - WP_ADMIN_PASSWORD
+      - MDB_USER_PASSWORD
     expose:
       - $WP_PORT
     restart: on-failure
@@ -78,10 +79,12 @@ networks:
   inception:
     name: inception
 
-#secrets:
-#  bd_secrets:
-#    - .env
-#  wp_secrets:
-#    file: .env  
-#  nginx_secrets:
-#    - .env
+secrets:
+  WP_USER_PASSWORD:
+    file: ./secrets/wp_user_pwd.txt
+  WP_ADMIN_PASSWORD:
+    file: ./secrets/wp_admn_pwd.txt
+  MDB_USER_PASSWORD:
+    file: ./secrets/mdb_user_pwd.txt
+  MDB_ROOT_PASSWORD:
+    file: ./secrets/mdb_root_pwd.txt

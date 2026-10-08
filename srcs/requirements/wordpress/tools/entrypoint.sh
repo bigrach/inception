@@ -10,6 +10,11 @@ until (echo > /dev/tcp/mariadb/${MDB_PORT}) 2>/dev/null; do
     sleep 1
 done
 
+# Get credentials
+MDB_USER_PASSWORD=$(cat /run/secrets/MDB_USER_PASSWORD)
+WP_ADMIN_PASSWORD=$(cat /run/secrets/WP_ADMIN_PASSWORD)
+WP_USER_PASSWORD=$(cat /run/secrets/WP_USER_PASSWORD)
+
 # CLI time baby
 if [ ! -f wp-config.php ]; then
     echo "Wordpress init"

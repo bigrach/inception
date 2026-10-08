@@ -8,6 +8,10 @@ mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 echo "adding /run/mysqld permissions.."
 
+# Get credentials
+MDB_USER_PASSWORD=$(cat /run/secrets/MDB_USER_PASSWORD)
+MDB_ROOT_PASSWORD=$(cat /run/secrets/MDB_ROOT_PASSWORD)
+
 # Editing .cnf with the right port from env
 envsubst '${MDB_PORT}' \
     < /etc/mysql/mariadb.conf.d/50-server.cnf.template \

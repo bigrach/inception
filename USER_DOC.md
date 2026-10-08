@@ -37,17 +37,19 @@ Once you are on the website, you can add `/wp-admin` to the end of your url to a
 A log in page should appear. Once logged in, the dashboard will be available, and you will be able to edit the website as you wish. 
 
 ### Credentials
-Use the credentials you will find in the `.env` file in the `srcs` folder. 
-
+Logins and other non confidential info can be found in the `.env` file in the `srcs` folder. For admin access, use the admin credentials. 
 ``` 
 WP_USER = *the login will be written here*
-WP_USER_PASSWORD = *the user password will be written here* 
-```
-For admin access, use the admin credentials. 
-```
 WP_ADMIN = *the admin login will be written here*
-WP_ADMIN_PASSWORD = *the admin password will be written here*
 ```
+Passwords are in the `secrets` folder in `srcs`. 
+```
+  WP_USER_PASSWORD:
+    file: ./secrets/wp_user_pwd.txt
+  WP_ADMIN_PASSWORD:
+    file: ./secrets/wp_admn_pwd.txt
+```
+Each file contains one password. 
 
 ### Monitoring the services  
 If you want to check how the services are doing, you can `make status` to have more information. You should have three live services after doing `make go`, and there should be a `wordpress` and `mariadb` folder in data. 

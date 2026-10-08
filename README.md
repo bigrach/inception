@@ -24,40 +24,36 @@ sudo systemctl start docker
 Don't forget to add your user to the docker group, and to reboot. 
 
 ## Env file
-In ./srcs, you should make a .env file. 
-Replace the // and the description with your own values. 
+In `srcs`, you need to make a .env file. 
+Replace the values in ** with your own. 
 ```
 # GLOBAL
-DOMAIN = // the website you want to redirect localhost to
-USER = // your name for the certificate
+DOMAIN = *the website you want to redirect localhost to*
+USER = *your name for the certificate*
 
 # MDB 
-MDB_DATABASE = // the name of the mariadb database
-MDB_USER = // the login of the mariadb user
-MDB_USER_PASSWORD = // the password of the mariadb user
-MDB_ROOT_PASSWORD = // the password of the mariadb root
+MDB_DATABASE = *the name of the mariadb database*
+MDB_USER = *the login of the mariadb user*
+MDB_USER_PASSWORD = *the password of the mariadb user*
+MDB_ROOT_PASSWORD = *the password of the mariadb root*
 
 # WP
-WP_USER = // the login of the wordpress user
-WP_USER_PASSWORD = // the password of the wordpress user
-WP_USER_MAIL = // the mail of the wordpress user 
+WP_USER = *the login of the wordpress user*
+WP_USER_PASSWORD = *the password of the wordpress user*
+WP_USER_MAIL = *the email of the wordpress user*
 
-WP_ADMIN_USER = // the login of the wordpress admin
-WP_ADMIN_PASSWORD = // the password of the wordpress admin
-WP_ADMIN_MAIL = // the mail of the wordpress admin (do not input the same as the user's)
+WP_ADMIN_USER = *the login of the wordpress admin
+WP_ADMIN_PASSWORD = *the password of the wordpress admin*
+WP_ADMIN_MAIL = *the email of the wordpress admin (do not input the same as the user's)*
 
 # PORTS
-WP_PORT = // which port to reach wordpress
-MDB_PORT = // which ports to reach mariadb
-NGINX_PORT = // which ports for nginx
+WP_PORT = *which port to reach wordpress*
+MDB_PORT = *which ports to reach mariadb*
+NGINX_PORT = *which ports for nginx*
 
 # VOLUMES
-MDB_VOLUME = // where the mariadb database will be stored on your machine 
-WP_VOLUME = // where the wordpress website files data will be stored on your volume
-```
-## Starting the docker compose, interrupting it...
-```bash
-~/Documents/inception$ make
+MDB_VOLUME = *where the mariadb database will be stored on your machine*
+WP_VOLUME = *where the wordpress website files data will be stored on your machine*
 ```
 While in the root directory, use the command `make` to build the docker compose and create the directories for the persisting data.
 
@@ -113,7 +109,7 @@ Docker volumes are handled by docker, while bind mounts are handled by the user.
 [Docker Compose](https://docs.docker.com/compose/gettingstarted/#step-1-set-up-the-project), [Docker Files](https://docs.docker.com/get-started/docker-concepts/building-images/writing-a-dockerfile/)
 
 ## Services
-[Wordpress CLI](https://make.wordpress.org/cli/handbook/guides/quick-start/), MariaDB SQL - [user management](https://mariadb.com/docs/server/reference/sql-statements/account-management-sql-statements), [database management](https://mariadb.com/docs/server/reference/sql-statements/data-definition/create/create-database), [configuration file](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/configuring-mariadb/configuring-mariadb-with-option-files), [NGINX](https://nginx.org/en/docs/http/configuring_https_servers.html)
+[Wordpress CLI](https://make.wordpress.org/cli/handbook/guides/quick-start/), [tuto](https://www.akamai.com/cloud/guides/how-to-install-wordpress-using-wp-cli-on-debian-10/), MariaDB SQL - [user management](https://mariadb.com/docs/server/reference/sql-statements/account-management-sql-statements), [database management](https://mariadb.com/docs/server/reference/sql-statements/data-definition/create/create-database), [configuration file](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/configuring-mariadb/configuring-mariadb-with-option-files), [NGINX](https://nginx.org/en/docs/http/configuring_https_servers.html)
 
 ## Additional
 

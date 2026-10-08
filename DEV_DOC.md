@@ -60,7 +60,7 @@ For a quick break, `make stop` stops the docker compose, and `make start` starts
 
 To interrupt the process, `make down` downs the docker compose, removes containers, deletes the network.
 
-If you want to start fresh, `make clean` downs the docker compose and deletes the persisting data (the data/wordpress and data/mariadb folders). `make nuke` does the same and more - images are deleted etc.  
+If you want to start fresh, `make clean` downs the docker compose and deletes the persisting data (the data/wordpress and data/mariadb folders). `make nuke` does the same and more - images are deleted etc. You will lose your entire website. Be careful.
 
 To know the current states of things, `make status` shows what is currently up and running, and lists what is in data. 
 

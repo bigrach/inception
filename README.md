@@ -25,7 +25,7 @@ Don't forget to add your user to the docker group, and to reboot.
 
 ## Env file
 In `srcs`, you need to make a .env file. 
-Replace the values in ** with your own. 
+Replace the values in * * with your own. 
 ```
 # GLOBAL
 DOMAIN = *the website you want to redirect localhost to*

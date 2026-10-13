@@ -18,7 +18,7 @@ sudo reboot
 
 ## Env file
 In `srcs`, you need to make a .env file. 
-Replace the values in ** with your own. 
+Replace the values in \* \* with your own. 
 ```
 # GLOBAL
 DOMAIN = *the website you want to redirect localhost to*
@@ -93,3 +93,17 @@ Do not write the <> caracters when doing the previous steps.
 
 ## Data
 The website files data will be stored in the `WP_VOLUME` directory, and the database's in the `MDB_VOLUME` one. Deleting those, or doing a `make nuke`, will ensure a complete reset of the website. Thread carefully. 
+
+
+## Monitoring the services  
+If you want to check how the services are doing, you can `make status` to have more information. You should have three live services after doing `make go`, and there should be a `wordpress` and `mariadb` folder in data. 
+
+
+To check if your database contains the right users, you can go on your mariadb container by doing a `make mariadb` and then:
+```
+SHOW DATABASES; // it should list your database
+USE *database name*;
+SHOW TABLE; // lists what is in the database
+DESCRIBE wp_users; // gives you every fields that wp_users contains
+SELECT ID, user_login, user_email FROM wp_users; // display the necessary infos on the users
+```

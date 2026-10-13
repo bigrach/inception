@@ -5,17 +5,18 @@ COLOR = "\e[1;36m"
 RESET = "\e[0m"
 
 # rules
-create:
+
+all: 
 	@mkdir -p ${MDB_VOLUME} && echo "creating mariadb data directory"
 	@mkdir -p ${WP_VOLUME} && echo "creating wordpress data directory"
-
-all: create
 	docker compose -f ./srcs/docker-compose.yml build
 
 run: 
 	docker compose -f ./srcs/docker-compose.yml up
 
-go: create
+go: 
+	@mkdir -p ${MDB_VOLUME} && echo "creating mariadb data directory"
+	@mkdir -p ${WP_VOLUME} && echo "creating wordpress data directory"
 	docker compose -f ./srcs/docker-compose.yml up --build -d
 
 start: 
@@ -47,8 +48,8 @@ status:
 
 # clean up
 clean: down 
-	@sudo rm -rf /home/me/data/mariadb && echo "mariadb data deleted"
-	@sudo rm -rf /home/me/data/wordpress && echo "wordpress data deleted"
+	@sudo rm -rf ${MDB_VOLUME} && echo "mariadb data deleted"
+	@sudo rm -rf ${WP_VOLUME} && echo "wordpress data deleted"
 
 nuke: clean
 	docker system prune --all --force

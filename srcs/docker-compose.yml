@@ -32,7 +32,7 @@ services:
       - inception
     restart: on-failure
     healthcheck:
-      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -P $${MDB_PORT} --silent"]
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -P $${MDB_PORT} -u $${MDB_USER} -p\"$$(cat /run/secrets/MDB_USER_PASSWORD)\" --silent"]
       interval: 5s
       timeout: 2s
       retries: 5

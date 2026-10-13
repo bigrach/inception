@@ -50,7 +50,12 @@ Passwords are in the `secrets` folder in `srcs`.
     file: ./secrets/wp_admn_pwd.txt
 ```
 Each file contains one password. 
+```
+my_super_wp_user_pwd
+```
+For example, this could be the content of `wp_user_pwd.txt`. 
 
 ### Monitoring the services  
 If you want to check how the services are doing, you can `make status` to have more information. You should have three live services after doing `make go`, and there should be a `wordpress` and `mariadb` folder in data. 
+
 

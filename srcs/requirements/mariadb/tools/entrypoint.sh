@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e 
 
 # Making sure permissions and directories are OK 
 chown -R mysql:mysql /var/lib/mysql

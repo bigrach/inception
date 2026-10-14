@@ -5,18 +5,18 @@ COLOR = "\e[1;36m"
 RESET = "\e[0m"
 
 # rules
+all: dircreate
+	docker compose -f ./srcs/docker-compose.yml build
 
-all: 
+dircreate:
+	@mkdir -p ${VOLUME_PATH} && echo "creating data directory"
 	@mkdir -p ${MDB_VOLUME} && echo "creating mariadb data directory"
 	@mkdir -p ${WP_VOLUME} && echo "creating wordpress data directory"
-	docker compose -f ./srcs/docker-compose.yml build
 
 run: 
 	docker compose -f ./srcs/docker-compose.yml up
 
-go: 
-	@mkdir -p ${MDB_VOLUME} && echo "creating mariadb data directory"
-	@mkdir -p ${WP_VOLUME} && echo "creating wordpress data directory"
+go: dircreate
 	docker compose -f ./srcs/docker-compose.yml up --build -d
 
 start: 
@@ -47,13 +47,14 @@ status:
 	@ls -l /home/rlebigre/data
 
 # clean up
-clean: down 
+clean: 
+	docker compose -f ./srcs/docker-compose.yml down --rmi all --volumes --remove-orphans
 	@sudo rm -rf ${MDB_VOLUME} && echo "mariadb data deleted"
 	@sudo rm -rf ${WP_VOLUME} && echo "wordpress data deleted"
 
-nuke: clean
-	docker system prune --all --force
-	docker volume rm mariadb
-	docker volume rm wordpress
+nuke: clean 
+	@docker images -qa | xargs -r docker rmi -f && echo  ${COLOR}"deleting ALL images"${RESET}
+	@docker volume ls -q | xargs -r docker volume rm && echo ${COLOR}"deleting ALL volumes"${RESET}
+	@docker system prune --all --force --volumes && echo ${COLOR}"removing ALL unused data"${RESET}
 
-.PHONY: all run go start stop re down clean nuke status
+.PHONY: all run go start stop re down mariadb wordpress nginx status clean nuke dircreate

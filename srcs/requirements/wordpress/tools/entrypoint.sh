@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e 
 
 cd /var/www/html
 
@@ -24,7 +25,7 @@ if [ ! -f wp-config.php ]; then
     wp config create    --dbname=$MDB_DATABASE \
                         --dbuser=$MDB_USER \
                         --dbpass=$MDB_USER_PASSWORD \
-                        --dbhost=mariadb \
+                        --dbhost="mariadb:${MDB_PORT}" \
                         --allow-root
 
     wp core install     --url=${DOMAIN} \
@@ -42,6 +43,11 @@ if [ ! -f wp-config.php ]; then
 
 else
     echo "Wordpress already configurated"
+
+    # In case mdb or nginx port has changed, we make sure we're set on the right ports
+    wp config set DB_HOST "mariadb:${MDB_PORT}" --allow-root
+    wp option update home 'https://$DOMAIN:${NGINX_PORT}' --allow-root 
+    wp option update siteurl 'https://$DOMAIN:${NGINX_PORT}' --allow-root
 fi
 
 exec "$@"

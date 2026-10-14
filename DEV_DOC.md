@@ -92,7 +92,7 @@ To edit the website, you can go to `<Domain>/wp-admin` and do your thing.
 Do not write the <> caracters when doing the previous steps.
 
 ## Data
-The website files data will be stored in the `WP_VOLUME` directory, and the database's in the `MDB_VOLUME` one. Deleting those, or doing a `make nuke`, will ensure a complete reset of the website. Thread carefully. 
+The website files data will be stored in the `WP_VOLUME` directory, and the database's in the `MDB_VOLUME` one. Deleting those, or doing a `make nuke`, will ensure a complete reset of the website, and will reset docker - no more images, no more volumes. Thread carefully. 
 
 
 ## Monitoring the services  
